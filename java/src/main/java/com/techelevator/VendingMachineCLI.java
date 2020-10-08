@@ -1,5 +1,9 @@
 package com.techelevator;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import com.techelevator.view.Menu;
 
 public class VendingMachineCLI {
@@ -26,9 +30,23 @@ public class VendingMachineCLI {
 		}
 	}
 
-	public static void main(String[] args) {
-		Menu menu = new Menu(System.in, System.out);
-		VendingMachineCLI cli = new VendingMachineCLI(menu);
-		cli.run();
+	public static void main(String[] args) throws IOException {
+//		Menu menu = new Menu(System.in, System.out);
+//		VendingMachineCLI cli = new VendingMachineCLI(menu);
+//		cli.run();
+		
+		
+		//create new file 
+			File newFile = new File("input.txt");
+			newFile.createNewFile();
+				//check file has been created or exists
+			if(!newFile.exists()) {
+				System.out.println("Error - File not created");
+			}
+			
+			//Writing to newFile
+			try(PrintWriter writer = new PrintWriter(newFile.getAbsoluteFile())) {
+				writer.println("Hi");
+			}
 	}
 }
