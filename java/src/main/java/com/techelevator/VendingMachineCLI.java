@@ -46,7 +46,7 @@ public class VendingMachineCLI {
 			
 			//Writing to newFile
 			try(PrintWriter writer = new PrintWriter(newFile.getAbsoluteFile())) {
-				writer.println("Hi");
+				writer.println("Hello World");
 			}
 	}
 }
