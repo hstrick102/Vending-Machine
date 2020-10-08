@@ -8,13 +8,13 @@ import java.util.Scanner;
 public class Menu {
 
 	private PrintWriter out;
-	private Scanner in;
+	private Scanner in; 
 
 	public Menu(InputStream input, OutputStream output) {
 		this.out = new PrintWriter(output);
 		this.in = new Scanner(input);
 	}
-
+//getting user choice 1 2 or 3 and then got to getChoiceFromUserInput it valid
 	public Object getChoiceFromOptions(Object[] options) {
 		Object choice = null;
 		while (choice == null) {
@@ -23,7 +23,7 @@ public class Menu {
 		}
 		return choice;
 	}
-
+//gets option from getChoiceFromOptions and return the choice, displays from original choice
 	private Object getChoiceFromUserInput(Object[] options) {
 		Object choice = null;
 		String userInput = in.nextLine();

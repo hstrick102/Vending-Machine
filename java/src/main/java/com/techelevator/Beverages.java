@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Beverages {
-	Map<String,String> allBeverages = new HashMap<>();
+	Map<String,String> allBeverages = new HashMap<>(); 
 	private static final double price = 200.0D;
 	private static int quantityCoke;
 	private static int quantitySprite;
@@ -42,6 +42,7 @@ public class Beverages {
 	  
 	  public int getRemainingQuantity(int numberWanted, String id) {
 		  int quantity = 0;
+		  //check in qty wanted is greater than qty available
 		  if(getNameOfBeverage(id).equals("Coke")) {
 			  quantity = quantityCoke - numberWanted;
 		  } else if (getNameOfBeverage(id).equals("Sprite")) {

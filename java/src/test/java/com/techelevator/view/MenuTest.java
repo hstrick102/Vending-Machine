@@ -17,7 +17,7 @@ public class MenuTest {
 	private ByteArrayOutputStream output;
 
 	@Before
-	public void setup() {
+	public void setup() { 
 		output = new ByteArrayOutputStream();
 	}
 
