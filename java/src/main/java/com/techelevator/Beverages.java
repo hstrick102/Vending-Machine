@@ -6,9 +6,9 @@ import java.util.Map;
 public class Beverages {
 	Map<String,String> allBeverages = new HashMap<>(); 
 	private static final double price = 200.0D;
-	private static int quantityCoke;
-	private static int quantitySprite;
-	private static int quantityWater;
+	private int quantityCoke;
+	private int quantitySprite;
+	private int quantityWater;
 	
 	
 	//CTOR
