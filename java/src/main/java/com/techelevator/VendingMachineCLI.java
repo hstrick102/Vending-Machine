@@ -29,6 +29,8 @@ public class VendingMachineCLI {
 			}
 		}
 	}
+	
+	//method to check if qty wanted is greater than qty aviabale
 
 	public static void main(String[] args) throws IOException {
 //		Menu menu = new Menu(System.in, System.out);
