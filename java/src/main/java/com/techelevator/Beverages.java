@@ -5,8 +5,10 @@ import java.util.Map;
 
 public class Beverages {
 	Map<String,String> allBeverages = new HashMap<>();
-	private static final int price = 200;
-	private static int quantity;
+	private static final double price = 200.0D;
+	private static int quantityCoke;
+	private static int quantitySprite;
+	private static int quantityWater;
 	
 	
 	//CTOR
@@ -18,7 +20,7 @@ public class Beverages {
 		//getters
 		
 		public double getPrice() {
-			return (double)(price / 100);
+			return (price / 100.0D);
 		}
 		
 		//derived methods
@@ -27,17 +29,33 @@ public class Beverages {
 		}
 				
 		
-	  public int getAvailableQuantity() {
-		  return quantity;
-	  }
+		public int getAvailableQuantity(String id) {
+			  if(getNameOfBeverage(id).equals("Coke")) {
+				  return quantityCoke;
+			  } else if (getNameOfBeverage(id).equals("Sprite")) {
+				  return quantitySprite;
+			  } else {
+				  return quantityWater;
+			  }
+			  
+		  }
 	  
-	  public int getRemainingQuantity(int numberWanted) {
-		  quantity -= numberWanted;
+	  public int getRemainingQuantity(int numberWanted, String id) {
+		  int quantity = 0;
+		  if(getNameOfBeverage(id).equals("Coke")) {
+			  quantity = quantityCoke - numberWanted;
+		  } else if (getNameOfBeverage(id).equals("Sprite")) {
+			  quantity = quantitySprite - numberWanted;
+		  } else {
+			  quantity = quantityWater - numberWanted;
+		  }
 		  return quantity;
 	  }
 	  
 	  public void setQuantity(int resetValues) {
-		  this.quantity = resetValues;
+		  this.quantityCoke = resetValues;
+		  this.quantitySprite = resetValues;
+		  this.quantityWater = resetValues;
 	  }
 	  
 	 public void putBeverages() {

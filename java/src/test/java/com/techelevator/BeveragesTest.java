@@ -19,13 +19,17 @@ public class BeveragesTest {
 	@Test
 	public void quanity_5_take_3_remaing_quantity_2 () {
 		beverage.setQuantity(5);
-		assertEquals(2,beverage.getRemainingQuantity(3));
+		assertEquals(2,beverage.getRemainingQuantity(3, "A1"));
+		assertEquals(2,beverage.getRemainingQuantity(3, "A2"));
+		assertEquals(2,beverage.getRemainingQuantity(3, "A3"));
 	}
 	
 	@Test
 	public void return_quantity() {
 		beverage.setQuantity(3);
-		assertEquals(3,beverage.getAvailableQuantity());
+		assertEquals(3,beverage.getAvailableQuantity("A1"));
+		assertEquals(3,beverage.getAvailableQuantity("A2"));
+		assertEquals(3,beverage.getAvailableQuantity("A3"));
 	}
 	
 }
