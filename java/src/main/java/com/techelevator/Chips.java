@@ -20,7 +20,7 @@ public class Chips {
 		//getters
 		
 		public double getPrice() {
-			return (price / 100.0D);
+			return price;
 		}
 		
 		//derived methods

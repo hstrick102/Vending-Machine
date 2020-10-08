@@ -11,7 +11,7 @@ public class Beverages {
 	private int quantityWater;
 	
 	
-	//CTOR
+	//CTOR 
 	public Beverages() {
 		putBeverages();
 		
@@ -20,7 +20,7 @@ public class Beverages {
 		//getters
 		
 		public double getPrice() {
-			return (price / 100.0D);
+			return price ;
 		}
 		
 		//derived methods
