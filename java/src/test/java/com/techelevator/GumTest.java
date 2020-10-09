@@ -10,10 +10,7 @@ public class GumTest {
 	public void get_price_return_75() {
 		assertEquals(.75, testGum.getPrice(),.001);
 	}
-	@Test
-	public void get_price_return_150() {
-		assertEquals(.75, testGum.getPrice(),.001);
-	}
+	
 	@Test
 	public void get_correct_candy_from_identifier() {
 		assertEquals("Orbit",testGum.getName());
@@ -29,7 +26,7 @@ public class GumTest {
 	}
 	
 	@Test
-	public void quanity_5_take_3_remaing_quantity_2 () {
+	public void set_quantity_2 () {
 		testGum.setQuantity(2);
 		assertEquals(2,testGum.getQuantity());
 	}

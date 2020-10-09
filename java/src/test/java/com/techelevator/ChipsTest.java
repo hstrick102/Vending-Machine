@@ -26,16 +26,9 @@ public class ChipsTest {
 	}
 	
 	@Test
-	public void quanity_5_take_3_remaing_quantity_2 () {
+	public void set_quantity_2 () {
 		testChips.setQuantity(2);
 		assertEquals(2,testChips.getQuantity());
 	}
-	
-	/*
-	 * @Test public void return_quantity() { testChips.setQuantity(3);
-	 * assertEquals(3,testChips.getAvailableQuantity("C1"));
-	 * assertEquals(3,testChips.getAvailableQuantity("C2"));
-	 * assertEquals(3,testChips.getAvailableQuantity("C3")); }
-	 */
 
 }

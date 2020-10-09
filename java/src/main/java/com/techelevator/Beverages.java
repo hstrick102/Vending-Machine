@@ -20,7 +20,7 @@ public class Beverages {
 		this.price = price;
 		this.quantity = quantity;
 		
-	}
+	} 
 	
 		//getters
 		
@@ -57,34 +57,6 @@ public class Beverages {
 		public void setIdentifier(String identifier) {
 			this.identifier = identifier;
 		}
-		
-		//derived methods
-		
-				
-		
-//		public int getAvailableQuantity(String id) {
-//			  if(getNameOfBeverage(id).equals("Coke")) {
-//				  return quantityCoke;
-//			  } else if (getNameOfBeverage(id).equals("Sprite")) {
-//				  return quantitySprite;
-//			  } else {
-//				  return quantityWater;
-//			  }
-//			  
-//		  }
-//	  
-//	  public int getRemainingQuantity(int numberWanted, String id) {
-//		  int quantity = 0;
-//		  //check in qty wanted is greater than qty available
-//		  if(getNameOfBeverage(id).equals("Coke")) {
-//			  quantity = quantityCoke - numberWanted;
-//		  } else if (getNameOfBeverage(id).equals("Sprite")) {
-//			  quantity = quantitySprite - numberWanted;
-//		  } else {
-//			  quantity = quantityWater - numberWanted;
-//		  }
-//		  return quantity;
-//	  }
 	  
 	  
 	  
