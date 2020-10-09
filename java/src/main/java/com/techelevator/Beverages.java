@@ -9,11 +9,12 @@ public class Beverages {
 	private int quantityCoke;
 	private int quantitySprite;
 	private int quantityWater;
+	private String name;
 	
 	
 	//CTOR 
 	public Beverages() {
-		putBeverages();
+		putBeverages(name, name);
 		
 	}
 	
@@ -59,10 +60,9 @@ public class Beverages {
 		  this.quantityWater = resetValues;
 	  }
 	  
-	 public void putBeverages() {
-		 allBeverages.put("A1", "Coke");
-		 allBeverages.put("A2", "Sprite");
-		 allBeverages.put("A3", "Water");
+	 public void putBeverages(String identifier, String name) {
+		 
+		 allBeverages.put(identifier, this.name);
 	 }
 
 }

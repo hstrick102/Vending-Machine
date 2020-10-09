@@ -211,43 +211,20 @@ public class VendingMachineCLI {
 	
 	//Inventory Method
 	public static void inventory() {
-		File inventoryFile = new File("input.txt");
-		//File inventoryFile = new File("vendingmachine.csv");
-		Map <String, Integer> allLines = new HashMap<>();
-		//List<String> lines = new ArrayList<>():
+		
+		File inventoryFile = new File("vendingmachine.csv");
+		
+		
 		try(Scanner inventoryScanner = new Scanner(inventoryFile)) {
 			while(inventoryScanner.hasNextLine()) {
 				String line = inventoryScanner.nextLine();
-				//list.add(line.substring(0,2);
-				//for(int i = 3; i<line.length(); i++){
-				//if(line.charAt(i)== ("|"){
-				//list.add(line.substring(0,i);
-				//}}
-			//if(lines.contains("Drink")){
-				//beverage.putBeverages(lines.get(0),lines.get(1));
-				//beverage.setPrice(lines.get(2));
-				if(line.contains("|")) {
-					allLines.put(line.substring(0, 2), Integer.parseInt(line.substring(3)));
-				}
-				for(Map.Entry<String, Integer> inventory : allLines.entrySet()) {
-					if(inventory.getKey().equals("A1") || inventory.getKey().equals("A2") || inventory.getKey().equals("A3")) {
-						
-						beverage.setQuantity(inventory.getValue());
-					}
-					if(inventory.getKey().equals("B1") || inventory.getKey().equals("B2") || inventory.getKey().equals("B3")) {
-						
-						candies.setQuantity(inventory.getValue());
-					}
-					if(inventory.getKey().equals("C1") || inventory.getKey().equals("C2") || inventory.getKey().equals("C3")) {
-						
-						chip.setQuantity(inventory.getValue());
-					}
-					if(inventory.getKey().equals("D1") || inventory.getKey().equals("D2") || inventory.getKey().equals("D3")) {
-						
-						gums.setQuantity(inventory.getValue());
-					}
-					
-				}
+				
+				String [] lines = line.split("\\|");
+				
+			if(lines[3].equals("Drink")){
+				//beverage.setPrice(lines[2]);
+				beverage.putBeverages(lines[0], lines[1]);
+			}
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("File does not exist");
