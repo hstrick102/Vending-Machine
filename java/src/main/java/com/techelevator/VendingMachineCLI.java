@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.Set;
 
 import com.techelevator.view.Menu;
 
@@ -31,30 +33,35 @@ public class VendingMachineCLI {
 
 	private static Menu menu;
 	
-	static Beverages beverage = new Beverages();
-	static Chips chip = new Chips();
-	static Candy candies = new Candy();
-	static Gum gums = new Gum();
-	
+	static Beverages beverage;
+	static Chips chip; 
+	static Candy candies;
+	static Gum gums;
+	static Map<String,Object> allItems = new HashMap<>();
+	static Map<String,Beverages> allDrinks = new HashMap<>();
+	static Map<String,Chips> allChips = new HashMap<>();
+	static Map<String,Candy> allCandy = new HashMap<>();
+	static Map<String,Gum> allGum = new HashMap<>();
+	 
 	static double currentMoney = 0;
 	
-	public static Map<String,String> getAllItems(Beverages beverage, Chips chip, Candy candies, Gum gums){
-		Map<String,String> allItems = new HashMap<>();
-		for(Map.Entry<String, String> bev: beverage.allBeverages.entrySet()) {
-			allItems.put(bev.getKey(), bev.getValue());
-		}
-		for(Map.Entry<String, String> chips: chip.allChips.entrySet()) {
-			allItems.put(chips.getKey(), chips.getValue());
-		}
-		for(Map.Entry<String, String> candy: candies.allCandy.entrySet()) {
-			allItems.put(candy.getKey(), candy.getValue());
-		}
-		for(Map.Entry<String, String> gum: gums.allGum.entrySet()) {
-			allItems.put(gum.getKey(), gum.getValue());
-		}
-		return allItems;
-	}
-	
+//	public static Map<String,String> getAllItems(Beverages beverage, Chips chip, Candy candies, Gum gums){ 
+//		
+//		for(Map.Entry<String, String> bev: beverage.allBeverages.entrySet()) {
+//			allItems.put(bev.getKey(), bev.getValue());
+//		}
+//		for(Map.Entry<String, String> chips: chip.allChips.entrySet()) {
+//			allItems.put(chips.getKey(), chips.getValue());
+//		}
+//		for(Map.Entry<String, String> candy: candies.allCandy.entrySet()) {
+//			allItems.put(candy.getKey(), candy.getValue());
+//		}
+//		for(Map.Entry<String, String> gum: gums.allGum.entrySet()) {
+//			allItems.put(gum.getKey(), gum.getValue());
+//		}
+//		return allItems;
+//	}
+//	
 
 	public VendingMachineCLI(Menu menu) { 
 		this.menu = menu;
@@ -64,38 +71,30 @@ public class VendingMachineCLI {
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 			
-
+		
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
 				// display vending machine items
+			
 				
-				for(Map.Entry<String, String> bev: beverage.allBeverages.entrySet()) {
-					if(beverage.getAvailableQuantity(bev.getKey()) == 0) {
-						 System.out.println(bev.getKey() + "|" + bev.getValue() + "|" + beverage.getPrice()/100.00D + "|" + "SOLD OUT" );
-					}else {
-					 System.out.println(bev.getKey() + "|" + bev.getValue() + "|" + beverage.getPrice()/100.00D + "|" + beverage.getAvailableQuantity(bev.getKey()) );
+				for(Map.Entry<String, Object> items: allItems.entrySet()) {
+					
+					if(items.getKey().contains("C")) {
+						System.out.println(items.getValue().toString());
+					}
+					else if(items.getKey().contains("A")) {
+						System.out.println(items.getValue().toString());
+					}
+					else if(items.getKey().contains("B")) {
+						System.out.println(items.getValue().toString());
+					}
+					else if(items.getKey().contains("D")) {
+						System.out.println(items.getValue().toString());
 					}
 				}
-				for(Map.Entry<String, String> candy: candies.allCandy.entrySet()) {
-					if(candies.getAvailableQuantity(candy.getKey()) == 0) {
-						System.out.println(candy.getKey() + "|" + candy.getValue()+ "|" + candies.getPrice()/100.00D + "|" + "SOLD OUT");
-					}else {
-					 System.out.println(candy.getKey() + "|" + candy.getValue()+ "|" + candies.getPrice()/100.00D + "|" + candies.getAvailableQuantity(candy.getKey()));
-					}
-				}
-				for(Map.Entry<String, String> chips: chip.allChips.entrySet()) {
-					if(chip.getAvailableQuantity(chips.getKey()) ==0) {
-						System.out.println(chips.getKey() + "|" + chips.getValue() + "|" + chip.getPrice()/100.00D+ "|" + "SOLD OUT");
-					}else {
-					 System.out.println(chips.getKey() + "|" + chips.getValue() + "|" + chip.getPrice()/100.00D+ "|" + chip.getAvailableQuantity(chips.getKey()));
-					}
-				}
-				for(Map.Entry<String, String> gum: gums.allGum.entrySet()) {
-					if(gums.getAvailableQuantity(gum.getKey())==0) {
-						System.out.println(gum.getKey() + "|" + gum.getValue()+ "|" + gums.getPrice()/100.00D+ "|" + "SOLD OUT");
-					}else
-					 System.out.println(gum.getKey() + "|" + gum.getValue()+ "|" + gums.getPrice()/100.00D+ "|" + gums.getAvailableQuantity(gum.getKey()));
-					}
-			}
+			
+		}
+				
+			
 			else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				// do purchase
 				purchase();
@@ -109,7 +108,7 @@ public class VendingMachineCLI {
 	
 	//Purchase Method
 	public static void purchase() {
-		Map <String,String> purchaseItems = getAllItems(beverage, chip, candies, gums);
+		//Map <String,String> purchaseItems = getAllItems(beverage, chip, candies, gums);
 		Scanner userInput = new Scanner(System.in);
 		System.out.println();
 		System.out.println("Current Money Provide: " + currentMoney);
@@ -122,87 +121,125 @@ public class VendingMachineCLI {
 			String moneyIn = userInput.nextLine();
 			double moneyInDouble = Double.parseDouble(moneyIn) * 100.00D;
 			currentMoney += moneyInDouble;
-			choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
+			purchase();
 			
 		}else if (choice.equals(PURCHASE_MENU_SELECT_PRODUCT_OPTION)) {
 			//printing out all options
-// 		Option 1:
-//			Map<String,String> items = getAllItems(beverage, chip, candies, gums);
-//			for(Map.Entry<String, String> item: items.entrySet()) {
-//				System.out.println(item.getKey() + ": " + item.getValue());
-//			}
-//		Option 2:
-			for(Map.Entry<String, String> bev: beverage.allBeverages.entrySet()) {
-				 System.out.println(bev.getKey() + ": " + bev.getValue());
-			}
-			for(Map.Entry<String, String> candy: candies.allCandy.entrySet()) {
-				 System.out.println(candy.getKey() + ": " + candy.getValue());
-			}
-			for(Map.Entry<String, String> chips: chip.allChips.entrySet()) {
-				 System.out.println(chips.getKey() + ": " + chips.getValue());
-			}
-			for(Map.Entry<String, String> gum: gums.allGum.entrySet()) {
-				 System.out.println(gum.getKey() + ": " + gum.getValue());
-			}
+
 			
+			for(Map.Entry<String, Object> item: allItems.entrySet()) {
+				System.out.println(item.getValue().toString());
+			}
+		
 			// user chooses 
 			System.out.print("Please Chooses an option>> ");
 			String identifier = userInput.nextLine();
 			System.out.println();
 			
-				// check if valid
-				if(purchaseItems.containsKey(identifier)) {
-				for(Map.Entry<String, String> bev: beverage.allBeverages.entrySet()) {
-					if (identifier.equals(bev.getKey())) {
-						currentMoney = (currentMoney - beverage.getPrice())/ 100.0;
-						System.out.println("Glug Glug, Yum!");
-						System.out.println(bev.getValue() + " Price is: " + beverage.getPrice()/100.00D + " Money Remaining: " + currentMoney );
-						choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
-					}else if(beverage.getAvailableQuantity(bev.getKey()) == 0){
-						System.out.println("This Item is out of stock! ");
-						choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
+			// check if valid
+			if(allItems.containsKey(identifier)) {
+				
+					if(identifier.contains("C")) {
+						
+						if(allDrinks.get(identifier).getQuantity() == 0) {
+							System.out.println("This product is SOLD OUT!");
+						}else {
+							
+							beverage.reduceQuantity();
+							if(currentMoney - allDrinks.get(identifier).getPrice() < 0) {
+								System.out.println("Not enough money, please feed more");
+							}else {
+								currentMoney -= allDrinks.get(identifier).getPrice();
+								System.out.println(beverage.getSound());
+							}
+							
 						}
-				}
-				for(Map.Entry<String, String> chips: chip.allChips.entrySet()) {
-					if (identifier.equals(chips.getKey())) {
-						currentMoney = (currentMoney - chip.getPrice())/ 100.0;
-						System.out.println("Crunch Crunch, Yum!");
-						System.out.println(chips.getValue() + " Price is: " + chip.getPrice()/100.00D + " Money Remaining: " + currentMoney );
-						choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
-					}else if(chip.getAvailableQuantity(chips.getKey()) == 0){
-						System.out.println("This Item is out of stock! ");
-						choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
+						purchase();
+					}
+					else if(identifier.contains("A")) {
+						
+						if(allChips.get(identifier).getQuantity() == 0) {
+							System.out.println("This product is SOLD OUT!");
+						}else {
+							
+							chip.reduceQuantity();
+							if(currentMoney - allChips.get(identifier).getPrice() < 0) {
+								System.out.println("Not enough money, please feed more");
+							}else {
+								currentMoney -= allChips.get(identifier).getPrice();
+								System.out.println(chip.getSound());
+							}
 						}
-				}
-				for(Map.Entry<String, String> candy: candies.allCandy.entrySet()) {
-					if (identifier.equals(candy.getKey())) {
-						currentMoney = (currentMoney - candies.getPrice())/ 100.0;
-						System.out.println("Munch Munch, Yum!");
-						System.out.println(candy.getValue() + " Price is: " + candies.getPrice()/100.00D + " Money Remaining: " + currentMoney );
-						choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
-					}else if(candies.getAvailableQuantity(candy.getKey()) == 0){
-						System.out.println("This Item is out of stock! ");
-						choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
+						purchase();
+					}
+					else if(identifier.contains("B")) {
+						System.out.println(candies.getSound());
+						if(allCandy.get(identifier).getQuantity() == 0) {
+							System.out.println("This product is SOLD OUT!");
+						}else {
+							
+							candies.reduceQuantity();
+							if(currentMoney - allCandy.get(identifier).getPrice() < 0) {
+								System.out.println("Not enough money, please feed more");
+							}else {
+								currentMoney -= allCandy.get(identifier).getPrice();
+								System.out.println(candies.getSound());
+							}
 						}
-				}
-				for(Map.Entry<String, String> gum: gums.allGum.entrySet()) {
-					if (identifier.equals(gum.getKey())) {
-						currentMoney = (currentMoney - gums.getPrice())/ 100.0;
-						System.out.println("Chew Chew, Yum!");
-						System.out.println(gum.getValue() + " Price is: " + gums.getPrice()/100.00D + " Money Remaining: " + currentMoney );
-						choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
-					}else if(gums.getAvailableQuantity(gum.getKey()) == 0){
-						System.out.println("This Item is out of stock! ");
-						choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
+						purchase();
+						
+					}
+					else if(identifier.contains("D")) {
+						System.out.println(gums.getSound());
+						if(allGum.get(identifier).getQuantity() == 0) {
+							System.out.println("This product is SOLD OUT!");
+						}else {
+							System.out.println(chip.getSound());
+							gums.reduceQuantity();
+							if(currentMoney - allGum.get(identifier).getPrice() < 0) {
+								System.out.println("Not enough money, please feed more");
+							}else {
+							currentMoney -= allGum.get(identifier).getPrice();
+							System.out.println(gums.getSound());
+							}
 						}
-				}
-					
-				}
+						purchase();
+					}
+				
+			}
 			else {
 				System.out.println("NOT A VALID INPUT");
 			}
 		}else if (choice.equals(PURCHASE_MENU_FINISH_TRANSACTION)) {
 			//get remaining money out
+			double quarter = 25;
+			double dime = 10;
+			double nickel = 5;
+			double penny = 1;
+			int numberOfQuarters =0;
+			int numberOfDimes = 0;
+			int numberOfNickels = 0;
+			int numberOfPennies = 0;
+			while(currentMoney > 0) {
+				if(numberOfQuarters ==0) {
+				numberOfQuarters = (int) (currentMoney/quarter);
+				currentMoney -= (quarter*numberOfQuarters);
+				}
+				else if(numberOfDimes == 0 ) {
+				numberOfDimes = (int) (currentMoney/dime);
+				currentMoney -= (dime* numberOfDimes);
+				}
+				else if(numberOfNickels == 0) {
+					numberOfNickels = (int) (currentMoney/nickel);
+					currentMoney -= (nickel* numberOfNickels);
+				}
+				else {
+					numberOfPennies = (int) (currentMoney/penny);
+					currentMoney -= (penny* numberOfPennies);
+				}
+				
+			}
+			System.out.println("Your Change Contains: " + numberOfQuarters+ " quarter(s), " + numberOfDimes+ " dime(s), " + numberOfNickels+ " nickel(s), " + numberOfPennies + " pennies." );
 			choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 		}
 		
@@ -218,12 +255,32 @@ public class VendingMachineCLI {
 		try(Scanner inventoryScanner = new Scanner(inventoryFile)) {
 			while(inventoryScanner.hasNextLine()) {
 				String line = inventoryScanner.nextLine();
-				
 				String [] lines = line.split("\\|");
 				
 			if(lines[3].equals("Drink")){
-				//beverage.setPrice(lines[2]);
-				beverage.putBeverages(lines[0], lines[1]);
+				beverage = new Beverages(lines[0],lines[1],Double.parseDouble(lines[2])*100,5);
+				allItems.put(lines[0],beverage);
+				allDrinks.put(lines[0],beverage);
+				
+			}
+			else if(lines[3].equals("Chip")){
+				
+				chip = new Chips(lines[0],lines[1],Double.parseDouble(lines[2])*100,5);
+				allItems.put(lines[0],chip);
+				allChips.put(lines[0],chip);
+			}
+			else if(lines[3].equals("Candy")){
+				
+				candies = new Candy(lines[0],lines[1],Double.parseDouble(lines[2])*100,5);
+				allItems.put(lines[0],candies);
+				allCandy.put(lines[0],candies);
+			
+			}
+			else if(lines[3].equals("Gum")){
+				
+				gums = new Gum(lines[0],lines[1],Double.parseDouble(lines[2])*100,5);
+				allItems.put(lines[0],gums);
+				allGum.put(lines[0],gums);
 			}
 			}
 		} catch (FileNotFoundException e) {
@@ -232,7 +289,7 @@ public class VendingMachineCLI {
 		
 	}
 	
-	
+	//Feed money
 	
 	//method to check if qty wanted is greater than qty aviabale
 
