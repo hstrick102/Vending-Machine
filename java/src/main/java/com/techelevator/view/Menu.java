@@ -12,7 +12,7 @@ public class Menu {
 
 	public Menu(InputStream input, OutputStream output) {
 		this.out = new PrintWriter(output);
-		this.in = new Scanner(input);
+		this.in = new Scanner(input); 
 	}
 //getting user choice 1 2 or 3 and then got to getChoiceFromUserInput it valid
 	public Object getChoiceFromOptions(Object[] options) {

@@ -43,9 +43,11 @@ public class VendingMachineCLI {
 
 	private static Menu menu;
 	
+	static Money money = new Money();
+	
 	static Beverages beverage;
 	static Chips chip; 
-	static Candy candies;
+	static Candy candies; 
 	static Gum gums;
 	static Map<String,Object> allItems = new HashMap<>();
 	static Map<String,Beverages> allDrinks = new HashMap<>();
@@ -107,7 +109,7 @@ public class VendingMachineCLI {
 		//Map <String,String> purchaseItems = getAllItems(beverage, chip, candies, gums);
 		Scanner userInput = new Scanner(System.in);
 		System.out.println();
-		System.out.println("Current Money Provide: $" + currentMoney/100);
+		System.out.println("Current Money Provide: $" + money.moneyFormatter(currentMoney));
 		String choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 		
 		
@@ -147,7 +149,8 @@ public class VendingMachineCLI {
 										currentMoney - allDrinks.get(identifier).getPrice());
 								currentMoney -= allDrinks.get(identifier).getPrice();
 								System.out.println(beverage.getSound());
-								System.out.println(allDrinks.get(identifier).getName() + " Price: $" + allDrinks.get(identifier).getPrice()/100.0 + " Available Money: $" + currentMoney/100.0);
+								System.out.println(allDrinks.get(identifier).getName() + " Price: $" + money.moneyFormatter(allDrinks.get(identifier).getPrice()) +
+										" Available Money: $" + money.moneyFormatter(currentMoney));
 							}
 							
 						}
@@ -167,7 +170,8 @@ public class VendingMachineCLI {
 										currentMoney - allChips.get(identifier).getPrice());
 								currentMoney -= allChips.get(identifier).getPrice();
 								System.out.println(chip.getSound());
-								System.out.println(allChips.get(identifier).getName() + " Price: $" + allChips.get(identifier).getPrice()/100.0 + " Available Money: $" + currentMoney/100.0);
+								System.out.println(allChips.get(identifier).getName() + " Price: $" + money.moneyFormatter(allChips.get(identifier).getPrice()) + 
+										" Available Money: $" + money.moneyFormatter(currentMoney));
 							}
 						}
 						purchase();
@@ -185,7 +189,8 @@ public class VendingMachineCLI {
 										currentMoney - allCandy.get(identifier).getPrice());
 								currentMoney -= allCandy.get(identifier).getPrice();
 								System.out.println(candies.getSound());
-								System.out.println(allCandy.get(identifier).getName() + " Price: $" + allCandy.get(identifier).getPrice()/100.0 + " Available Money: $" + currentMoney/100.0);
+								System.out.println(allCandy.get(identifier).getName() + " Price: $" + money.moneyFormatter(allCandy.get(identifier).getPrice()) + 
+										" Available Money: $" + money.moneyFormatter(currentMoney));
 								
 							}
 						}
@@ -206,7 +211,8 @@ public class VendingMachineCLI {
 									currentMoney - allGum.get(identifier).getPrice());
 							currentMoney -= allGum.get(identifier).getPrice();
 							System.out.println(gums.getSound());
-							System.out.println(allGum.get(identifier).getName() + " Price: $" + allGum.get(identifier).getPrice()/100.0 + " Available Money: $" + currentMoney/100.0);
+							System.out.println(allGum.get(identifier).getName() + " Price: $" + money.moneyFormatter(allGum.get(identifier).getPrice()) + 
+									" Available Money: $" + money.moneyFormatter(currentMoney));
 							}
 						}
 						purchase();
@@ -217,36 +223,8 @@ public class VendingMachineCLI {
 				System.out.println("NOT A VALID INPUT");
 			}
 		}else if (choice.equals(PURCHASE_MENU_FINISH_TRANSACTION)) {
-			//get remaining money out
-			double quarter = 25;
-			double dime = 10;
-			double nickel = 5;
-			double penny = 1;
-			double numberOfQuarters =0;
-			double numberOfDimes = 0;
-			double numberOfNickels = 0;
-			double numberOfPennies = 0;
-			while(currentMoney > 0) {
-				if(numberOfQuarters ==0) {
-				numberOfQuarters = Math.floor(currentMoney/quarter);
-				currentMoney -= (quarter*numberOfQuarters);
-				}
-				else if(numberOfDimes == 0 ) {
-				numberOfDimes =  Math.floor(currentMoney/dime);
-				currentMoney -= (dime* numberOfDimes);
-				}
-				else if(numberOfNickels == 0) {
-					numberOfNickels =  Math.floor(currentMoney/nickel);
-					currentMoney -= (nickel* numberOfNickels);
-				}
-				else {
-					numberOfPennies =  Math.floor(currentMoney/penny);
-					currentMoney -= (penny* numberOfPennies);
-				}
-				
-			}
-			System.out.println("Your Change Contains: " + numberOfQuarters+ " quarter(s), " + numberOfDimes+ " dime(s), " + numberOfNickels+ " nickel(s), " + numberOfPennies + " pennies." );
 			
+			System.out.println(money.makeChange(currentMoney));
 		}
 		
 	}
@@ -266,7 +244,7 @@ public class VendingMachineCLI {
 			if(lines[3].equals("Drink")){
 				beverage = new Beverages(lines[0],lines[1],Double.parseDouble(lines[2])*100,5);
 				allItems.put(lines[0],beverage);
-				allDrinks.put(lines[0],beverage);
+				allDrinks.put(lines[0],beverage); 
 				
 			}
 			else if(lines[3].equals("Chip")){
@@ -327,7 +305,7 @@ public class VendingMachineCLI {
 		VendingMachineCLI cli = new VendingMachineCLI(menu);
 		inventory();
 		cli.run();
-		
+		 
 		
 //		
 	}

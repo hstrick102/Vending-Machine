@@ -1,10 +1,8 @@
 package com.techelevator;
 
-import java.util.HashMap;
-import java.util.Map;
 
-public class Beverages {
-	Map<String,Double> allBeverages = new HashMap<>(); 
+
+public class Beverages implements Items {
 	private double price;
 	private String name;
 	private int quantity;
@@ -18,7 +16,7 @@ public class Beverages {
 		this.name = name;
 		this.sound = "Glug Glug, Yum!";
 		this.price = price;
-		this.quantity = quantity;
+		this.quantity = quantity; 
 		
 	} 
 	
@@ -59,11 +57,6 @@ public class Beverages {
 		}
 	  
 	  
-	  
-	 public void putBeverages(String identifier, double price) {
-		 this.price = price;
-		 allBeverages.put(identifier, this.price);
-	 }
 	 
 	 @Override
 	 public String toString() {

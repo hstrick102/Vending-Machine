@@ -19,8 +19,8 @@ public class MenuTest {
 	@Before
 	public void setup() { 
 		output = new ByteArrayOutputStream();
-	}
-
+	} 
+  
 	@Test
 	public void displays_a_list_of_menu_options_and_prompts_user_to_make_a_choice() {
 		Object[] options = new Object[] { new Integer(3), "Blind", "Mice" };

@@ -1,10 +1,7 @@
 package com.techelevator;
 
-import java.util.HashMap;
-import java.util.Map;
 
-public class Candy {
-	Map<String,Double> allCandy = new HashMap<>();
+public class Candy implements Items{
 	private double price;
 	private int quantity;
 	private String name;
@@ -21,7 +18,7 @@ public class Candy {
 			this.quantity = quantity;
 			
 		}
-	
+	 
 		///getters
 		
 		public double getPrice() {
@@ -56,36 +53,7 @@ public class Candy {
 				public void setIdentifier(String identifier) {
 					this.identifier = identifier;
 				}
-		
-//		public int getAvailableQuantity(String id) {
-//			  if(getNameOfCandy(id).equals("Reeses")) {
-//				  return quantityReeses;
-//			  } else if (getNameOfCandy(id).equals("Snickers")) {
-//				  return quantitySnickers;
-//			  } else {
-//				  return quantityStarbursts;
-//			  }
-//			  
-//		  }
-//	  
-//	  public int getRemainingQuantity(int numberWanted, String id) {
-//		  int quantity = 0;
-//		  if(getNameOfCandy(id).equals("Reeses")) {
-//			  quantity = quantityReeses - numberWanted;
-//		  } else if (getNameOfCandy(id).equals("Snickers")) {
-//			  quantity = quantitySnickers - numberWanted;
-//		  } else {
-//			  quantity = quantityStarbursts - numberWanted;
-//		  }
-//		  return quantity;
-//	  }
 	  
-	 
-	  
-	 public void putCandy(String identifier, Double price) {
-		 this.price = price;
-		 allCandy.put(identifier, this.price);
-	 }
 	 
 	 @Override
 	 public String toString() {

@@ -1,10 +1,8 @@
 package com.techelevator;
 
-import java.util.HashMap;
-import java.util.Map;
 
-public class Chips {
-	Map<String,Double> allChips = new HashMap<>();
+public class Chips implements Items{
+	
 	private double price;
 	private int quantity;
 	private String name;
@@ -57,42 +55,6 @@ public class Chips {
 			this.identifier = identifier;
 		}
 		
-		
-				
-		
-//		public int getAvailableQuantity(String id) {
-//			  if(getNameOfChips(id).equals("Doritos")) {
-//				  return quantityDoritos;
-//			  } else if (getNameOfChips(id).equals("Lays")) {
-//				  return quantityLays;
-//			  } else {
-//				  return quantityUtz;
-//			  }
-//			  
-//		  }
-//	  
-//	  public int getRemainingQuantity(int numberWanted, String id) {
-//		  int quantity = 0;
-//		  if(getNameOfChips(id).equals("Doritos")) {
-//			  quantity = quantityDoritos - numberWanted;
-//		  } else if (getNameOfChips(id).equals("Extra")) {
-//			  quantity = quantityLays - numberWanted;
-//		  } else {
-//			  quantity = quantityUtz - numberWanted;
-//		  }
-//		  return quantity;
-//	  }
-//	  
-//	  public void setQuantity(int resetValues) {
-//		  this.quantityDoritos = resetValues;
-//		  this.quantityLays = resetValues;
-//		  this.quantityUtz = resetValues;
-//	  }
-	  
-	 public void putChips(String identifier, Double price) {
-		 this.price = price;
-		 allChips.put(identifier, this.price);
-	 }
 	 @Override
 	 public String toString() {
 		
