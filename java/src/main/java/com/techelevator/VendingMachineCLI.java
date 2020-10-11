@@ -17,6 +17,7 @@ import java.util.Set;
 import com.techelevator.view.Inventory;
 import com.techelevator.view.LogWriter;
 import com.techelevator.view.Menu;
+import com.techelevator.view.SalesReport;
 
 
 public class VendingMachineCLI {
@@ -25,7 +26,8 @@ public class VendingMachineCLI {
 	private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
 	private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
 	private static final String MAIN_MENU_EXIT = "Exit";
-	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE,MAIN_MENU_EXIT };
+	private static final String SALES_REPORT = "Sales Report";
+	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE,MAIN_MENU_EXIT, SALES_REPORT };
 	
 	//Purchase Menu Variables
 	private static final String PURCHASE_MENU_FEED_MONEY_OPTION = "Feed Money";
@@ -45,6 +47,7 @@ public class VendingMachineCLI {
 	private static Menu menu;
 	
 	static Money money = new Money();
+	
 	
 	static Beverages beverage;
 	static Chips chip; 
@@ -81,7 +84,10 @@ public class VendingMachineCLI {
 			} else if(choice.equals(MAIN_MENU_EXIT)){
 				System.exit(0);
 				
+			} else if(choice.equals(SALES_REPORT)) {
+				
 			}
+			
 		}
 	}
 	
@@ -89,11 +95,12 @@ public class VendingMachineCLI {
 	//Purchase Method
 	public static void purchase() {
 		
+		
 		Scanner userInput = new Scanner(System.in);
 		System.out.println();
 		System.out.println("Current Money Provide: $" + money.moneyFormatter(currentMoney));
 		String choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
-		
+		SalesReport reportOfSales = null;
 		
 		if (choice.equals(PURCHASE_MENU_FEED_MONEY_OPTION)) {
 			double moneyIn = feedMoney();
@@ -105,6 +112,7 @@ public class VendingMachineCLI {
 			//printing out all options
 			for(Entry<String, Items> item: allItems.entrySet()) {
 				System.out.println(item.getValue().toString());
+				reportOfSales = new SalesReport(item.getValue().getName(), 0);
 			}
 		
 			// user chooses 
@@ -130,6 +138,7 @@ public class VendingMachineCLI {
 						System.out.println(allItems.get(identifier).getSound());
 						System.out.println(allItems.get(identifier).getName() + " Price: $" + money.moneyFormatter(allItems.get(identifier).getPrice()) +
 								" Available Money: $" + money.moneyFormatter(currentMoney));
+						reportOfSales.additionalItem();
 					}
 					
 				}
