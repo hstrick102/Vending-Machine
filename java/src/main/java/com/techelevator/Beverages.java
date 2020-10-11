@@ -17,7 +17,7 @@ public class Beverages implements Items {
 		this.sound = "Glug Glug, Yum!";
 		this.price = price;
 		this.quantity = quantity; 
-		
+		 
 	} 
 	
 		//getters
@@ -41,26 +41,18 @@ public class Beverages implements Items {
 		
 				
 		//setters
-		public void setPrice(double price) {
-			this.price = price;
-		}
 		
-		public void setName(String name) {
-			this.name = name;
-		}
+
 		public void setQuantity(int resetValue) {
 			  this.quantity = resetValue;
 		  }
 		
-		public void setIdentifier(String identifier) {
-			this.identifier = identifier;
-		}
 	  
 	  
 	 
 	 @Override
 	 public String toString() {
-		
+		 
 		 if(getQuantity() <= 0) {
 			 return getIdentifier() + "|" + getName() + "|" + getPrice()/100.00D + "|" + "SOLD OUT";
 		 }

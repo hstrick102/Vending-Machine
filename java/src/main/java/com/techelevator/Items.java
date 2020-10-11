@@ -6,5 +6,6 @@ public interface Items {
 	double getPrice();
 	int getQuantity();
 	String getSound();
+	void reduceQuantity();
 
 }

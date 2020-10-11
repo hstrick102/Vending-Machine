@@ -10,7 +10,7 @@ public class VendingMachineTest {
 	
 	Menu menu = new Menu(System.in, System.out);
 	VendingMachineCLI test = new VendingMachineCLI(menu);
-		
+	OutputStream	
 	
 	@Test
 	public void user_adds_five_dollars() {
@@ -23,13 +23,13 @@ public class VendingMachineTest {
 	}
 	
 	
-	@Test
-	public void check_inventory_method() {
-		VendingMachineCLI.inventory();
-		String actual = VendingMachineCLI.allCandy.get("B1").toString();
-		String expected = "B1|Moonpie|1.8|5";
-		assertEquals(expected, actual);
-		}
+//	@Test
+//	public void check_inventory_method() {
+//		VendingMachineCLI.inventory();
+//		String actual = VendingMachineCLI.allCandy.get("B1").toString();
+//		String expected = "B1|Moonpie|1.8|5";
+//		assertEquals(expected, actual);
+//		}
 
 
 }

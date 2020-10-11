@@ -14,6 +14,7 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.Set;
 
+import com.techelevator.view.Inventory;
 import com.techelevator.view.LogWriter;
 import com.techelevator.view.Menu;
 
@@ -49,11 +50,9 @@ public class VendingMachineCLI {
 	static Chips chip; 
 	static Candy candies; 
 	static Gum gums;
-	static Map<String,Object> allItems = new HashMap<>();
-	static Map<String,Beverages> allDrinks = new HashMap<>();
-	static Map<String,Chips> allChips = new HashMap<>();
-	static Map<String,Candy> allCandy = new HashMap<>();
-	static Map<String,Gum> allGum = new HashMap<>();
+	static Inventory inventory; 
+	
+	static Map<String,Items> allItems = inventory.inputStock();
 	
 	static LogWriter informationLog = new LogWriter();
 	 
@@ -74,10 +73,11 @@ public class VendingMachineCLI {
 				// display vending machine items
 			
 				
-				for(Map.Entry<String, Object> items: allItems.entrySet()) {
+				for(Entry<String, Items> items: allItems.entrySet()) {
 					
 					if(items.getKey().contains("C")) {
 						System.out.println(items.getValue().toString());
+						
 					}
 					else if(items.getKey().contains("A")) {
 						System.out.println(items.getValue().toString());
@@ -89,16 +89,13 @@ public class VendingMachineCLI {
 						System.out.println(items.getValue().toString());
 					}
 				}
-			
-		}
-				
-			
+			}
 			else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				// do purchase
 				purchase();
 			} else if(choice.equals(MAIN_MENU_EXIT)){
 				System.exit(0);
-				// exit ?
+				
 			}
 		}
 	}
@@ -106,7 +103,7 @@ public class VendingMachineCLI {
 	
 	//Purchase Method
 	public static void purchase() {
-		//Map <String,String> purchaseItems = getAllItems(beverage, chip, candies, gums);
+		
 		Scanner userInput = new Scanner(System.in);
 		System.out.println();
 		System.out.println("Current Money Provide: $" + money.moneyFormatter(currentMoney));
@@ -121,192 +118,74 @@ public class VendingMachineCLI {
 			
 		}else if (choice.equals(PURCHASE_MENU_SELECT_PRODUCT_OPTION)) {
 			//printing out all options
-
-			
-			for(Map.Entry<String, Object> item: allItems.entrySet()) {
+			for(Entry<String, Items> item: allItems.entrySet()) {
 				System.out.println(item.getValue().toString());
 			}
 		
 			// user chooses 
+			System.out.println();
 			System.out.print("Please Chooses an option>> ");
 			String identifier = userInput.nextLine();
 			System.out.println();
 			
 			// check if valid
 			if(allItems.containsKey(identifier)) {
-				
-					if(identifier.contains("C")) {
 						
-						if(allDrinks.get(identifier).getQuantity() == 0) {
-							System.out.println("This product is SOLD OUT!");
-						}else {
-							
-							if(currentMoney - allDrinks.get(identifier).getPrice() < 0) {
-								System.out.println("Not enough money, please feed more");
-							}else {
-								allDrinks.get(identifier).reduceQuantity();
-								informationLog.logger(allDrinks.get(identifier).getName() + " " + allDrinks.get(identifier).getIdentifier(), currentMoney, 
-										currentMoney - allDrinks.get(identifier).getPrice());
-								currentMoney -= allDrinks.get(identifier).getPrice();
-								System.out.println(beverage.getSound());
-								System.out.println(allDrinks.get(identifier).getName() + " Price: $" + money.moneyFormatter(allDrinks.get(identifier).getPrice()) +
-										" Available Money: $" + money.moneyFormatter(currentMoney));
-							}
-							
-						}
-						purchase();
+				if(allItems.get(identifier).getQuantity() == 0) {
+					System.out.println("This product is SOLD OUT!");
+				}else {
+					
+					if(currentMoney - allItems.get(identifier).getPrice() < 0) {
+						System.out.println("Not enough money, please feed more");
+					}else {
+						allItems.get(identifier).reduceQuantity();
+						informationLog.logger(allItems.get(identifier).getName() + " " + allItems.get(identifier).getIdentifier(), currentMoney, 
+								currentMoney - allItems.get(identifier).getPrice());
+						currentMoney -= allItems.get(identifier).getPrice();
+						System.out.println(allItems.get(identifier).getSound());
+						System.out.println(allItems.get(identifier).getName() + " Price: $" + money.moneyFormatter(allItems.get(identifier).getPrice()) +
+								" Available Money: $" + money.moneyFormatter(currentMoney));
 					}
-					else if(identifier.contains("A")) {
-						
-						if(allChips.get(identifier).getQuantity() == 0) {
-							System.out.println("This product is SOLD OUT!");
-						}else {
-							
-							if(currentMoney - allChips.get(identifier).getPrice() < 0) {
-								System.out.println("Not enough money, please feed more");
-							}else {
-								allChips.get(identifier).reduceQuantity();
-								informationLog.logger(allChips.get(identifier).getName() + " " + allChips.get(identifier).getIdentifier(), currentMoney, 
-										currentMoney - allChips.get(identifier).getPrice());
-								currentMoney -= allChips.get(identifier).getPrice();
-								System.out.println(chip.getSound());
-								System.out.println(allChips.get(identifier).getName() + " Price: $" + money.moneyFormatter(allChips.get(identifier).getPrice()) + 
-										" Available Money: $" + money.moneyFormatter(currentMoney));
-							}
-						}
-						purchase();
-					}
-					else if(identifier.contains("B")) {
-						if(allCandy.get(identifier).getQuantity() == 0) {
-							System.out.println("This product is SOLD OUT!");
-						}else {
-							
-							if(currentMoney - allCandy.get(identifier).getPrice() < 0) {
-								System.out.println("Not enough money, please feed more");
-							}else {
-								allCandy.get(identifier).reduceQuantity();
-								informationLog.logger(allCandy.get(identifier).getName() + " " + allCandy.get(identifier).getIdentifier(), currentMoney, 
-										currentMoney - allCandy.get(identifier).getPrice());
-								currentMoney -= allCandy.get(identifier).getPrice();
-								System.out.println(candies.getSound());
-								System.out.println(allCandy.get(identifier).getName() + " Price: $" + money.moneyFormatter(allCandy.get(identifier).getPrice()) + 
-										" Available Money: $" + money.moneyFormatter(currentMoney));
-								
-							}
-						}
-						purchase();
-						
-					}
-					else if(identifier.contains("D")) {
-						
-						if(allGum.get(identifier).getQuantity() == 0) {
-							System.out.println("This product is SOLD OUT!");
-						}else {
-							
-							if(currentMoney - allGum.get(identifier).getPrice() < 0) {
-								System.out.println("Not enough money, please feed more");
-							}else {
-								allGum.get(identifier).reduceQuantity();
-							informationLog.logger(allGum.get(identifier).getName() + " " + allGum.get(identifier).getIdentifier(), currentMoney, 
-									currentMoney - allGum.get(identifier).getPrice());
-							currentMoney -= allGum.get(identifier).getPrice();
-							System.out.println(gums.getSound());
-							System.out.println(allGum.get(identifier).getName() + " Price: $" + money.moneyFormatter(allGum.get(identifier).getPrice()) + 
-									" Available Money: $" + money.moneyFormatter(currentMoney));
-							}
-						}
-						purchase();
-					}
-				
+					
+				}
+				purchase();
 			}
 			else {
 				System.out.println("NOT A VALID INPUT");
 			}
 		}else if (choice.equals(PURCHASE_MENU_FINISH_TRANSACTION)) {
 			
+			informationLog.logger("Give Change", currentMoney, Double.parseDouble(money.moneyFormatter(0.0)));
 			System.out.println(money.makeChange(currentMoney));
 		}
-		
 	}
 	
-	
-	//Inventory Method
-	public static void inventory() {
-		
-		File inventoryFile = new File("vendingmachine.csv");
-		
-		
-		try(Scanner inventoryScanner = new Scanner(inventoryFile)) {
-			while(inventoryScanner.hasNextLine()) {
-				String line = inventoryScanner.nextLine();
-				String [] lines = line.split("\\|");
-				
-			if(lines[3].equals("Drink")){
-				beverage = new Beverages(lines[0],lines[1],Double.parseDouble(lines[2])*100,5);
-				allItems.put(lines[0],beverage);
-				allDrinks.put(lines[0],beverage); 
-				
-			}
-			else if(lines[3].equals("Chip")){
-				
-				chip = new Chips(lines[0],lines[1],Double.parseDouble(lines[2])*100,5);
-				allItems.put(lines[0],chip);
-				allChips.put(lines[0],chip);
-				
-			}
-			else if(lines[3].equals("Candy")){
-				
-				candies = new Candy(lines[0],lines[1],Double.parseDouble(lines[2])*100,5);
-				allItems.put(lines[0],candies);
-				allCandy.put(lines[0],candies);
-			
-			}
-			else if(lines[3].equals("Gum")){
-				
-				gums = new Gum(lines[0],lines[1],Double.parseDouble(lines[2])*100,5);
-				allItems.put(lines[0],gums);
-				allGum.put(lines[0],gums);
-			}
-			}
-		} catch (FileNotFoundException e) {
-			System.out.println("File does not exist");
-		}
-		
-	}
 	
 	//Feed money
 	public static double feedMoney() {
-		
 	
-	//System.out.print("Insert Money(whole dollars only)>> ");
-	double moneyIn = 0;
-	String choice = (String) menu.getChoiceFromOptions(FEED_MENU_OPTIONS);
-	//if statement to catch in user inputs money with change
-	//String moneyIn = userInput.nextLine();
-	if(choice.equals(CHOOSE_ONE)) {
-		moneyIn = 100.00;
-	} else if(choice.equals(CHOOSE_TWO)) {
-		moneyIn = 200.00;
-	} else if(choice.equals(CHOOSE_FIVE)) {
-		moneyIn = 500.00;
-	} else if(choice.equals(CHOOSE_TEN)) {
-		moneyIn = 1000.00;
-	} else {
-		System.out.println("CANNOT ACCEPT");
-	}
-		return moneyIn;
+		double moneyIn = 0;
+		String choice = (String) menu.getChoiceFromOptions(FEED_MENU_OPTIONS);
+		//if statement to catch in user inputs money with change
+			if(choice.equals(CHOOSE_ONE)) {
+				moneyIn = 100.00;
+			} else if(choice.equals(CHOOSE_TWO)) {
+				moneyIn = 200.00;
+			} else if(choice.equals(CHOOSE_FIVE)) {
+				moneyIn = 500.00;
+			} else if(choice.equals(CHOOSE_TEN)) {
+				moneyIn = 1000.00;
+			} else {
+				System.out.println("CANNOT ACCEPT");
+			}
+			return moneyIn;
+		}
 	
-	//double moneyInDouble = Double.parseDouble(moneyIn) * 100.00D;
-}
-	//method to check if qty wanted is greater than qty aviabale
 
 	public static void main(String[] args) throws IOException {
 		Menu menu = new Menu(System.in, System.out);
 		VendingMachineCLI cli = new VendingMachineCLI(menu);
-		inventory();
 		cli.run();
-		 
 		
-//		
 	}
 }

@@ -41,20 +41,12 @@ public class Gum implements Items{
 			}
 				
 	//setters
-			public void setPrice(double price) {
-				this.price = price;
-			}
-			
-			public void setName(String name) {
-				this.name = name;
-			}
+
 			public void setQuantity(int value) {
 				  this.quantity = value;
 			  }
 			
-			public void setIdentifier(String identifier) {
-				this.identifier = identifier;
-			}
+
 				  
 	
 	 @Override

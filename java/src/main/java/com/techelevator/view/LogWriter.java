@@ -20,7 +20,7 @@ public class LogWriter {
 	//Writing to newFile
 	public void logger(String transaction, double moneyIn, double currentBalance) {
 		Date dateOfTransactions = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("mm-dd-yyyy hh:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
 		try(PrintWriter writer = new PrintWriter(new FileOutputStream(new File("Log.txt"), true))) {
 			writer.println(formatter.format(dateOfTransactions) + " " + transaction + " $" + money.moneyFormatter(moneyIn) + " $" + money.moneyFormatter(currentBalance));
 		} catch (IOException e) {
