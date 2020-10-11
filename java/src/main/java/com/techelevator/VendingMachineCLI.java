@@ -71,23 +71,8 @@ public class VendingMachineCLI {
 		
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
 				// display vending machine items
-			
-				
-				for(Entry<String, Items> items: allItems.entrySet()) {
-					
-					if(items.getKey().contains("C")) {
-						System.out.println(items.getValue().toString());
-						
-					}
-					else if(items.getKey().contains("A")) {
-						System.out.println(items.getValue().toString());
-					}
-					else if(items.getKey().contains("B")) {
-						System.out.println(items.getValue().toString());
-					}
-					else if(items.getKey().contains("D")) {
-						System.out.println(items.getValue().toString());
-					}
+				for(Entry<String, Items> item: allItems.entrySet()) {
+					System.out.println(item.getValue().toString());
 				}
 			}
 			else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
@@ -180,7 +165,7 @@ public class VendingMachineCLI {
 			}
 			return moneyIn;
 		}
-	
+
 
 	public static void main(String[] args) throws IOException {
 		Menu menu = new Menu(System.in, System.out);
